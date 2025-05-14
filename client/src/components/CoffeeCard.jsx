@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
   const { name, chef, price, _id } = coffee;
 
   const handelDelete = (_id) => {
@@ -28,6 +28,10 @@ const CoffeeCard = ({ coffee }) => {
                 text: "Your file has been deleted.",
                 icon: "success",
               });
+
+              //remove coffee
+              const remaining = coffees.filter((coffee) => coffee._id !== _id);
+              setCoffees(remaining);
             }
           });
       }
@@ -48,8 +52,12 @@ const CoffeeCard = ({ coffee }) => {
           <p>Price: {price}</p>
         </div>
         <div className="card-actions justify-end flex flex-col">
-          <Link to={`/coffee/${_id}`}  className="btn btn-primary">Details</Link>
-          <button className="btn btn-primary">Edit</button>
+          <Link to={`/coffee/${_id}`} className="btn btn-primary">
+            Details
+          </Link>
+          <Link to={`/updateCoffee/${_id}`} className="btn btn-primary">
+            Edit
+          </Link>
           <button onClick={() => handelDelete(_id)} className="btn btn-primary">
             Delete
           </button>
